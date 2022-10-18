@@ -42,9 +42,6 @@ pipeline {
               if(artifactExists) {
                   echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
 
-                  
-              }
-
             } else {
               error "*** File: ${artifactPath}, could not be found";
           }
