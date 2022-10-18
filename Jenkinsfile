@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "master"
+        label "Built-In Node"
     }
     environment {
       NEXUS_VERSION = "nexus3"
