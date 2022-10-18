@@ -11,7 +11,7 @@ pipeline {
       // Repository where we will upload the artifact
       NEXUS_REPOSITORY = "simple-java-maven-app"
       // Jenkins credential id to authenticate to Nexus OSS
-      NEXUS_CREDENTIAL_ID = "44620c50-1589-4617-a677-7563985e46e1"
+      NEXUS_CREDENTIAL_ID = "testuser"
       NEXUS_SCRIPT = "maven-create-hosted"
     }
     stages {
@@ -42,28 +42,27 @@ pipeline {
               if(artifactExists) {
                   echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
 
-                  nexusArtifactUploader(
-                      nexusVersion: NEXUS_VERSION,
-                      protocol: NEXUS_PROTOCOL,
-                      nexusUrl: NEXUS_URL,
-                      groupId: pom.groupId,
-                      version: pom.version,
-                      repository: NEXUS_REPOSITORY,
-                      credentialsId: NEXUS_CREDENTIAL_ID,
-                      artifacts: [
-                          // Artifact generated such as .jar, .ear and .war files.
-                          [artifactId: pom.artifactId,
-                          classifier: '',
-                          file: artifactPath,
-                          type: pom.packaging],
-
-                          // Lets upload the pom.xml file for additional information for Transitive dependencies
-                          [artifactId: pom.artifactId,
-                          classifier: '',
-                          file: "pom.xml",
-                          type: "pom"]
-                      ]
-                  );
+                  nexusArtifactUploader {
+                  nexusVersion('nexus3')
+                  protocol('http')
+                  nexusUrl('nexus.gaddit.se')
+                  version('3.42')
+                  repository('NexusArtifactUploader')
+                  credentialsId('44620c50-1589-4617-a677-7563985e46e1')
+                  artifact {
+                      artifactId('nexus-artifact-uploader')
+                      type('jar')
+                      classifier('debug')
+                      file('nexus-artifact-uploader.jar')
+                  }
+                  artifact {
+                      artifactId('nexus-artifact-uploader')
+                      type('hpi')
+                      classifier('debug')
+                      file('nexus-artifact-uploader.hpi')
+                  }
+                }
+              }
 
             } else {
               error "*** File: ${artifactPath}, could not be found";
