@@ -11,7 +11,7 @@ pipeline {
       // Repository where we will upload the artifact
       NEXUS_REPOSITORY = "simple-java-maven-app"
       // Jenkins credential id to authenticate to Nexus OSS
-      NEXUS_CREDENTIAL_ID = "anonymous"
+      NEXUS_CREDENTIAL_ID = "testuser"
       NEXUS_SCRIPT = "maven-create-hosted"
     }
     stages {
