@@ -1,9 +1,17 @@
 pipeline {
     agent {
-        docker {
-            image 'maven:3.8.1-adoptopenjdk-11'
-            args '-v /root/.m2:/root/.m2'
-        }
+        label "master"
+    }
+    environment {
+      NEXUS_VERSION = "nexus3"
+      NEXUS_PROTOCOL = "http"
+      // Where your Nexus is running. 'nexus-3' is defined in the docker-compose file
+      NEXUS_URL = "nexus.gaddit.se:80"
+      // Repository where we will upload the artifact
+      NEXUS_REPOSITORY = "simple-java-maven-app"
+      // Jenkins credential id to authenticate to Nexus OSS
+      NEXUS_CREDENTIAL_ID = "anonymous"
+      NEXUS_SCRIPT = "maven-create-hosted"
     }
     stages {
         stage('Build') {
