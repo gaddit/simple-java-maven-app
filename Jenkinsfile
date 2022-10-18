@@ -42,26 +42,7 @@ pipeline {
               if(artifactExists) {
                   echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
 
-                  nexusArtifactUploader {
-                  nexusVersion('nexus3')
-                  protocol('http')
-                  nexusUrl('nexus.gaddit.se')
-                  version('3.42')
-                  repository('NexusArtifactUploader')
-                  credentialsId('44620c50-1589-4617-a677-7563985e46e1')
-                  artifact {
-                      artifactId('nexus-artifact-uploader')
-                      type('jar')
-                      classifier('debug')
-                      file('nexus-artifact-uploader.jar')
-                  }
-                  artifact {
-                      artifactId('nexus-artifact-uploader')
-                      type('hpi')
-                      classifier('debug')
-                      file('nexus-artifact-uploader.hpi')
-                  }
-                }
+                  
               }
 
             } else {
